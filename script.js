@@ -1,45 +1,37 @@
 //your JS code here. If required.
-document.addEventListener('DOMContentLoaded', generateBoxes);
+const reset = document.getElementById("reset_button");
+const change = document.getElementById("change_button");
 
-function generateBoxes() {
-  const container = document.querySelector('.container');
+reset.addEventListener("click", resetGrid);
+change.addEventListener("click", changeColor);
 
-  for (let i = 0; i < 800; i++) {
-    const square = document.createElement('div');
-    square.classList.add('square');
-    container.appendChild(square);
+function resetGrid() {
+  for (let i = 1; i <= 9; i++) {
+    const gridItem = document.getElementById(`${i}`);
+    gridItem.style.backgroundColor = "transparent";
+   // console.log(gridItem);
   }
-
-  addHoverListeners();
 }
 
-function addHoverListeners() {
-  const squares = document.querySelectorAll('.square');
+function changeColor() {
+  const blockId = document.getElementById("block_id");
+  const colorId = document.getElementById("colour_id");
 
-  squares.forEach(square => {
-    square.addEventListener('mouseover', handleMouseOver);
-  });
-}
-
-function handleMouseOver(event) {
-  const square = event.target;
-
-  // Change background color to random color
-  square.style.backgroundColor = getRandomColor();
-
-  // Smoothly transition back to original color after 1 second
-  setTimeout(() => {
-    square.style.backgroundColor = 'lightgray';
-  }, 1000);
-}
-
-function getRandomColor() {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
-
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
+  if (!blockId.value) {
+    alert("Please enter block id");
   }
+  if (!colorId.value) {
+    alert("Please enter colour id");
+  }
+  if (blockId.value>=9) {
+    alert("Invalid block Id");
+  }
+  
+  resetGrid();
+  console.log(blockId.value)
+  const gridItem = document.getElementById(`${blockId.value}`);
+  gridItem.style.backgroundColor = colorId.value;
 
-  return color;
+  blockId.value = "";
+  colorId.value = "";
 }
